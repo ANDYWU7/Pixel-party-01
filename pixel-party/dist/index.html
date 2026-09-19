@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel Party</title>
+  <meta name="description" content="Play Space Invaders, Block Stack, Maze Muncher, 2048, Snake, and Block Breaker.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23bbfa67'/%3E%3Cpath d='M8 8h12v4h4v8h-4v4H8z' fill='%23141619'/%3E%3Cpath d='M12 12h8v8h-8z' fill='%23bbfa67'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/press-start-2p.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="shop.css"><script src="games.js" defer></script><script src="shop.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><span class="brand">Pi<span id="test-points">x</span>el Party</span><a class="shop-link" href="#shop">Shop <span id="wallet">0 pts</span></a><button id="theme-toggle" type="button" aria-label="Light mode" aria-pressed="false" title="Switch to light mode">Light</button><button id="sound" class="icon-button" aria-label="Sound" aria-pressed="false" title="Muted — click to unmute"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4 6 8H3v8h3l5 4V4Z"/><path class="sound-muted" d="m16 9 6 6m0-6-6 6"/><g class="sound-playing"><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></g></svg></button></header>
+  <main>
+    <section id="lobby">
+      <h1 class="lobby-title">Games</h1>
+      <div class="game-grid">
+        <a class="game-card space-card" href="#space"><div class="game-art"><canvas id="preview-space" width="640" height="460" aria-label="Space Invaders game preview"></canvas></div><div class="game-info"><h2>Space Invaders</h2></div></a>
+        <a class="game-card blocks-card" href="#blocks"><div class="game-art"><canvas id="preview-blocks" width="640" height="460" aria-label="Colorful falling blocks game preview"></canvas></div><div class="game-info"><h2>Block Stack</h2></div></a>
+        <a class="game-card maze-card" href="#maze"><div class="game-art"><canvas id="preview-maze" width="640" height="460" aria-label="Maze Muncher game preview"></canvas></div><div class="game-info"><h2>Maze Muncher</h2></div></a>
+        <a class="game-card" href="#2048"><div class="game-art"><canvas id="preview-2048" width="640" height="460" aria-label="2048 game preview"></canvas></div><div class="game-info"><h2>2048</h2></div></a>
+        <a class="game-card" href="#snake"><div class="game-art"><canvas id="preview-snake" width="640" height="460" aria-label="Snake game preview"></canvas></div><div class="game-info"><h2>Snake</h2></div></a>
+        <a class="game-card" href="#breaker"><div class="game-art"><canvas id="preview-breaker" width="640" height="460" aria-label="Block Breaker game preview"></canvas></div><div class="game-info"><h2>Block Breaker</h2></div></a>
+      </div>
+      <div class="reset-progress"><button id="reset-progress" type="button">Reset all progress</button><p>Warning: this permanently deletes your points, purchased cosmetics, and equipped styles from this browser. This cannot be undone.</p></div>
+    </section>
+    <section id="shop-view" hidden>
+      <a href="#" class="back-link">Back</a>
+      <div class="shop-heading"><h1>Cosmetic shop</h1><span><strong id="shop-balance">0</strong> points</span></div>
+      <p>Mix a color scheme with a style. Everything here is cosmetic.</p>
+      <p id="shop-message" role="status" aria-live="polite"></p>
+      <h2>Color schemes</h2><div id="shop-palette" class="shop-grid"></div>
+      <h2>Website styles</h2><div id="shop-style" class="shop-grid"></div>
+      <details class="earning-guide" open>
+        <summary>How to earn points</summary>
+        <p>You earn shop points in two ways. Your in-game score is separate from your shop points.</p>
+        <h3>1. Play-time points</h3>
+        <p>Earn <strong>1 point for every 10 seconds of active play</strong>. That’s up to 6 points per minute.</p>
+        <p>The earning timer starts when you start moving in Snake, launch the ball, use the Space Invaders or Block Stack controls, or make progress in a game. Progress includes clearing an alien, placing a block, eating a dot, or making a valid move. If you make no progress for 12 seconds, the earning timer stops until you make progress again. Menus, paused games, and waiting to launch the ball never count.</p>
+        <h3>2. Progress bonuses</h3>
+        <p>The actions below each build up <strong>1 extra point</strong>:</p>
+        <table class="reward-table"><thead><tr><th scope="col">Game</th><th scope="col">Actions for 1 bonus point</th></tr></thead><tbody>
+          <tr><th scope="row">Space Invaders</th><td>Destroy 5 aliens.</td></tr>
+          <tr><th scope="row">Block Stack</th><td>Place 4 pieces, clear 2 lines, or combine both. For example, 2 pieces + 1 line also counts.</td></tr>
+          <tr><th scope="row">Maze Muncher</th><td>Eat 25 dots or power pellets.</td></tr>
+          <tr><th scope="row">2048</th><td>Make 4 moves that actually change the board.</td></tr>
+          <tr><th scope="row">Snake</th><td>Eat 2 foods.</td></tr>
+          <tr><th scope="row">Block Breaker</th><td>Hit bricks 5 times. A hit counts even if the brick takes another hit to break.</td></tr>
+        </tbody></table>
+        <p><strong>A bonus needs both the actions and the play time.</strong> Every 10 seconds of active play also allows 1 bonus point to be paid out. Doing lots of actions quickly won’t pay all the bonuses at once: up to 2 points’ worth of progress can wait for enough play time. If you have the play time first, up to 2 bonus points can wait for enough actions.</p>
+        <p>Watch the game’s point display: it shows <strong>time points and bonus points separately</strong>. When a bonus is ready but needs more play time, it shows how many active seconds remain. Eating 2 foods earns 1 bonus; eating 4 earns 2, as the play-time allowance becomes available.</p><h3>An example</h3>
+        <p>Play actively for 30 seconds and destroy 10 aliens. You earn <strong>3 play-time points + 2 bonus points = 5 shop points</strong>. With 15 aliens in those same 30 seconds, you could earn 6 points instead.</p>
+        <p>The long-run maximum is <strong>12 points per active minute</strong>: 6 from time and 6 from progress. Your total will be lower if you make less progress or spend time paused or idle.</p>
+        <h3>What gets saved?</h3>
+        <p>Whole points go straight into your balance as you earn them. You don’t need to finish a game. Points already earned, purchases, and equipped cosmetics are saved in this browser.</p>
+        <p>Unpaid progress toward a bonus resets when you start a new run. Partial play time carries between runs during this visit, but it isn’t saved after a reload. Clearing browser data removes your saved balance and purchases.</p>
+      </details>
+      <p id="storage-note">Saved in this browser.</p>
+    </section>
+    <section id="game-view" hidden>
+      <div class="game-screen">
+      <div class="game-heading"><a href="#" class="back-link">Back</a><div class="reward-readout"><span id="run-points">+0 pts · 0 time + 0 bonus</span><span id="bonus-status">Next bonus: 0% of actions done</span></div></div>
+      <div class="play-heading"><div><h1 id="game-title">Space Invaders</h1></div><div class="game-actions"><button id="pause" class="secondary-button">Ⅱ Pause</button><button id="restart" class="secondary-button">↻ Restart</button></div></div>
+      <div class="board-shell"><div class="scoreboard"><div>SCORE <strong id="score">000000</strong></div><div id="level-label">LEVEL <strong id="level">01</strong></div><div id="life-label">LIVES <strong id="lives">3</strong></div></div><div class="canvas-wrap"><canvas id="game-canvas" width="600" height="600" tabindex="0" aria-label="Game board"></canvas><div class="game-overlay" id="overlay"><h2 id="overlay-title">Ready?</h2><p id="overlay-description"></p><button id="start" class="primary-button">Start game <span>→</span></button></div></div></div>
+      <div id="touch-controls" class="touch-controls" aria-label="Touch game controls"></div>
+      </div>
+      <aside class="game-guide" id="instructions"><h2>How to play</h2><p id="guide-description"></p><h3>Key bindings</h3><div id="controls-list"></div><p class="pause-note">Pauses automatically when you switch tabs.</p></aside>
+    </section>
+  </main>
+  <footer>Pixel Party · <span id="year">2026</span></footer>
+</body>
+</html>
