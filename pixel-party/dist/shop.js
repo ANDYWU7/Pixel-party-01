@@ -1,8 +1,8 @@
 'use strict';
 const SHOP_ITEMS = [
   {id:'arcade',kind:'style',name:'Pixel arcade',price:0,description:'Pixel letters and chunky buttons.'},
-  {id:'simple',kind:'style',name:'Simple',price:120,description:'The plain, old-school website look.'},
-  {id:'modern',kind:'style',name:'Modern',price:360,description:'Clean type, rounded cards and buttons.'},
+  {id:'simple',kind:'style',name:'Simple',price:120,description:'Flat buttons, straight lines and geometric games.'},
+  {id:'modern',kind:'style',name:'Modern',price:360,description:'Smooth movement, crisp graphics, gradients and glow.'},
   {id:'classic',kind:'palette',name:'Classic blue',price:0,description:'Blue panels and gold accents.',colors:['#111827','#202c46','#f4d479']},
   {id:'mint',kind:'palette',name:'Mint terminal',price:35,description:'Green phosphor on a dark screen.',colors:['#0c1c19','#193b31','#9ee7b4']},
   {id:'plum',kind:'palette',name:'Purple night',price:80,description:'Plum panels and lilac highlights.',colors:['#1c1429','#382749','#d7b3ff']},

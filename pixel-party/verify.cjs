@@ -2,13 +2,14 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const noop = () => {};
-const drawing = new Proxy({}, {get: () => noop, set: () => true});
+const drawing = new Proxy({}, {get: (_,key) => key==='createLinearGradient'?()=>({addColorStop:noop}):noop, set: () => true});
 const nodes = new Map();
 function node(id) { if (!nodes.has(id)) nodes.set(id,{textContent:'',hidden:false,style:{},firstChild:{textContent:''},getContext:()=>drawing,addEventListener:noop,setAttribute:noop,replaceChildren:noop,append:noop,focus:noop});return nodes.get(id); }
 let registered;
 const context = vm.createContext({document:{documentElement:{dataset:{},style:{setProperty:noop}},getElementById:node,createElement:()=>node(Math.random()),addEventListener:noop,modelContext:{registerTool:t=>registered=t}},window:{addEventListener:noop,scrollTo:noop},location:{hash:''},requestAnimationFrame:noop,navigator:{},localStorage:{getItem:()=>null,setItem:noop},console,Math,Date,Set,Promise});
 vm.runInContext(fs.readFileSync('dist/games.js','utf8'),context);
 vm.runInContext(fs.readFileSync('dist/shop.js','utf8'),context);
+vm.runInContext(fs.readFileSync('dist/visuals.js','utf8'),context);
 vm.runInContext(fs.readFileSync('dist/app.js','utf8'),context);
 function run(src) { return vm.runInContext(src,context); }
 run("location.hash='#maze';route();start()");
@@ -109,3 +110,22 @@ for(const elapsed of [0,.03,.07,.11,.16]){
 run("location.hash='#breaker';route();start()");assert.equal(run('game.ball.y+7'),532);
 run("held.add('ArrowRight');game.update(.04);held.clear()");assert.equal(run('game.ball.x'),run('game.paddle+game.width/2'));assert.equal(run('game.ball.y+7'),532);
 console.log('Passed: grid-snapped tile drawing and ball resting on the paddle.');
+// Modern rendering interpolates positions without moving collision cells.
+run("Shop.profile.style='modern';Shop.apply();location.hash='#snake';route();start();game.input('ArrowUp');game.update(.17)");
+assert.equal(run('game.snake[0].y'),9);
+assert.equal(run('game.previous[0].y'),10);
+run('game.update(.06)');
+assert.ok(run('(()=>{const p=GameVisuals.position({...game.snake[0],from:game.previous[0]},game.timer,.16);return p.y>9&&p.y<10;})()'));
+assert.equal(run('game.snake[0].y'),9);
+assert.ok(run(`(()=>{const path=[];const c=new Proxy({createLinearGradient:()=>({addColorStop:()=>{}}),moveTo:(x,y)=>path.push([x,y]),lineTo:(x,y)=>path.push([x,y])},{get:(o,k)=>o[k]||(()=>{})});GameVisuals.snake(game,c,GameVisuals.theme());return path.slice(1).every((p,i)=>p[0]===path[i][0]||p[1]===path[i][1]);})()`),'Smooth snake turns must stay orthogonal');
+run("location.hash='#maze';route();start();game.map=Array.from({length:21},()=>Array(19).fill('.'));game.input('ArrowRight');game.update(.12);game.update(.04)");
+assert.equal(run('game.player.x'),10);assert.equal(run('game.player.from.x'),9);
+assert.ok(run('(()=>{const p=GameVisuals.position(game.player,game.tick,.115);return p.x>9&&p.x<10;})()'));
+run("pause()");const pausedTick=run('game.tick');run('loop(last+16)');assert.equal(run('game.tick'),pausedTick);
+assert.ok(run("(()=>{const p=GameVisuals.tilePosition({x:3,y:0,toX:0,toY:0},.4);return p.x>0&&p.x<3&&!Number.isInteger(p.x);})()"));
+run("Shop.profile.style='simple';Shop.apply()");
+assert.equal(run('GameVisuals.position(game.player,game.tick,.115).x'),10);
+assert.ok(run("Number.isInteger(GameVisuals.tilePosition({x:3,y:0,toX:0,toY:0},.4).x)"));
+run("Shop.profile.style='modern';Shop.apply();window.matchMedia=()=>({matches:true})");assert.equal(run('GameVisuals.smooth'),false);
+run("window.matchMedia=()=>({matches:false});location.hash='#snake';route();start()");assert.equal(run('game.previous'),undefined);
+console.log('Passed: smooth visual positions preserve collision grids, snake turns stay orthogonal, pause freezes motion, Simple stays snapped, reduced motion and restart reset.');

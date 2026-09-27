@@ -38,6 +38,7 @@ html[data-style='modern'] .site-header{box-shadow:none;border-bottom-width:1px}h
 @media(max-width:700px){.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.site-header{flex-wrap:wrap;gap:10px}.shop-link{margin-right:0;font-size:10px;gap:8px}.shop-heading{align-items:flex-start;flex-direction:column}}
 @media(max-width:520px){.brand{font-size:14px}.shop-link{padding:6px 8px;font-size:9px}#wallet{font-size:12px}body:has(#game-view:not([hidden])) .site-header{height:auto;min-height:52px}.shop-grid{grid-template-columns:1fr}.shop-heading h1{font-size:17px}.shop-item button{font-size:11px}html[data-style='simple'] .brand,html[data-style='modern'] .brand{font-size:20px}}
 .earning-guide h3{font: bold 17px/1.5 'Courier New',monospace;margin:24px 0 10px;color:inherit}
+.earning-guide .points-hint{font-size:12px;opacity:.45;margin:20px 0 0}
 .reward-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6;margin:16px 0}
 .reward-table th,.reward-table td{text-align:left;vertical-align:top;padding:12px;border:1px solid #627a9b}
 .reward-table thead{background:var(--shop-panel);color:#eef3fa}
@@ -98,3 +99,13 @@ html[data-style='modern'] .site-header{background:linear-gradient(120deg,var(--s
 html[data-style='modern'] .game-card,html[data-style='modern'] .shop-item{background:linear-gradient(145deg,var(--mode-surface),color-mix(in srgb,var(--mode-surface) 90%,var(--shop-accent)))}
 html[data-style='modern'] button,html[data-style='modern'] .back-link,html[data-style='modern'] .game-screen .back-link,html[data-style='modern'] .shop-link{background:linear-gradient(135deg,var(--mode-surface),color-mix(in srgb,var(--mode-surface) 85%,var(--shop-accent)))}
 html[data-style='modern'] .site-header button,html[data-style='modern'] .site-header .shop-link{background:linear-gradient(135deg,var(--shop-panel),color-mix(in srgb,var(--shop-panel) 78%,var(--shop-accent)));color:#fff}
+/* Game surfaces share the selected website finish. */
+#game-canvas{position:absolute;inset:0;width:100%;height:100%}
+html[data-style='simple'] #game-canvas,html[data-style='modern'] #game-canvas,html[data-style='simple'] .game-art canvas,html[data-style='modern'] .game-art canvas{image-rendering:auto}
+html[data-style='simple'] .game-screen .board-shell,html[data-style='simple'] .game-art{border:1px solid var(--mode-border);box-shadow:none;border-radius:0}
+html[data-style='simple'] .game-overlay{background:var(--mode-bg);color:var(--mode-text)}
+html[data-style='simple'] .game-overlay h2,html[data-style='simple'] .game-overlay p{color:var(--mode-text)}
+html[data-style='modern'] .game-screen .board-shell,html[data-style='modern'] .game-art{border:1px solid var(--mode-border);border-radius:14px;overflow:hidden;box-shadow:0 0 22px color-mix(in srgb,var(--shop-accent) 12%,transparent)}
+html[data-style='modern'] .game-screen .scoreboard{background:linear-gradient(120deg,var(--mode-surface),color-mix(in srgb,var(--mode-surface) 90%,var(--shop-accent)))}
+html[data-style='modern'] .game-overlay{background:color-mix(in srgb,var(--mode-bg) 88%,transparent);backdrop-filter:blur(7px)}
+html[data-style='modern'] .game-overlay h2,html[data-style='modern'] .game-overlay p{color:var(--mode-text)}

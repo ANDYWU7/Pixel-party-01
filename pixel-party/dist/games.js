@@ -79,6 +79,7 @@ class Game2048 {
     } else this.flash = Math.max(0, this.flash - dt);
   }
   draw(c) {
+    if(GameVisuals.draw('tiles',this,c))return;
     rect(c, 0, 0, 600, 600, '#171b24');
     const palette = {2:'#dae5eb',4:'#c4d7e6',8:'#91badb',16:'#6396c8',32:'#5678b9',64:'#735da6',128:'#9870b0',256:'#bb81ad',512:'#d18b84',1024:'#e2ac6e',2048:'#f4ce70'};
     const tile = (v,x,y) => {
@@ -131,6 +132,7 @@ class SnakeGame {
     if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20 || body.some(p => p.x === head.x && p.y === head.y)) {
       finish(); return;
     }
+    this.previous=this.snake.map(p=>({...p}));
     this.snake.unshift(head);
     if (eats) {
       score += 10; this.eaten++; level = 1 + Math.floor(this.eaten / 5); this.food = this.newFood(); beep(660, .06);
@@ -145,6 +147,7 @@ class SnakeGame {
     if (this.timer >= interval) { this.timer -= interval; this.step(); }
   }
   draw(c) {
+    if(GameVisuals.draw('snake',this,c))return;
     rect(c, 0, 0, 600, 600, '#101e17');
     for (let y = 0; y < 20; y++) for (let x = 0; x < 20; x++) {
       rect(c, 20 + x * 28, 20 + y * 28, 28, 28, (x + y) % 2 ? '#172b20' : '#1a3023');
@@ -220,6 +223,7 @@ class BreakerGame {
     hud();
   }
   draw(c) {
+    if(GameVisuals.draw('breaker',this,c))return;
     rect(c, 0, 0, 600, 600, '#131925');
     const brickColor = '#8fb7dc';
     for (const brick of this.bricks) {

@@ -5,7 +5,7 @@
   <title>Pixel Party</title>
   <meta name="description" content="Play Space Invaders, Block Stack, Maze Muncher, 2048, Snake, and Block Breaker.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23bbfa67'/%3E%3Cpath d='M8 8h12v4h4v8h-4v4H8z' fill='%23141619'/%3E%3Cpath d='M12 12h8v8h-8z' fill='%23bbfa67'/%3E%3C/svg%3E">
-  <link rel="preload" href="fonts/press-start-2p.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="shop.css"><script src="games.js" defer></script><script src="shop.js" defer></script><script src="app.js" defer></script>
+  <link rel="preload" href="fonts/press-start-2p.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="shop.css"><script src="games.js" defer></script><script src="shop.js" defer></script><script src="visuals.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
   <header class="site-header"><span class="brand">Pi<span id="test-points">x</span>el Party</span><a class="shop-link" href="#shop">Shop <span id="wallet">0 pts</span></a><button id="theme-toggle" type="button" aria-label="Light mode" aria-pressed="false" title="Switch to light mode">Light</button><button id="sound" class="icon-button" aria-label="Sound" aria-pressed="false" title="Muted — click to unmute"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4 6 8H3v8h3l5 4V4Z"/><path class="sound-muted" d="m16 9 6 6m0-6-6 6"/><g class="sound-playing"><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></g></svg></button></header>
@@ -52,6 +52,7 @@
         <h3>What gets saved?</h3>
         <p>Whole points go straight into your balance as you earn them. You don’t need to finish a game. Points already earned, purchases, and equipped cosmetics are saved in this browser.</p>
         <p>Unpaid progress toward a bonus resets when you start a new run. Partial play time carries between runs during this visit, but it isn’t saved after a reload. Clearing browser data removes your saved balance and purchases.</p>
+        <p class="points-hint">Hint: X marks the spot</p>
       </details>
       <p id="storage-note">Saved in this browser.</p>
     </section>
